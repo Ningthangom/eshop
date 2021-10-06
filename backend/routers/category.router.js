@@ -1,6 +1,7 @@
 const { Category } = require('../models/category')
 const express = require('express')
 const router = express.Router();
+const mongoose = require('mongoose')
 
 
 router.get('/', async (req, res) => {
@@ -15,6 +16,10 @@ router.get('/', async (req, res) => {
 
 // get a category with details
 router.get('/:id', async(req,res) => {
+       // check if the id is a valid mongo id 
+   if(!mongoose.isValidObjectId(req.params.id)){
+    return res.status(400).json({success: false, message:"invalid category id"})
+}
         const category = await Category.findById(req.params.id)
         if(!category) {
             return res.status(500).json({success:false, message: 'category coud not be found'})
@@ -28,6 +33,10 @@ router.get('/:id', async(req,res) => {
 
 // update a category
 router.put('/:id', async(req, res) =>{
+       // check if the id is a valid mongo id 
+   if(!mongoose.isValidObjectId(req.params.id)){
+    return res.status(400).json({success: false, message:"invalid category id"})
+}
         const category = await Category.findByIdAndUpdate(
             req.params.id,
             {
@@ -74,5 +83,18 @@ router.delete('/:id', (req, res) => {
         return res.status(400).json({success: false, error: err})
     })
 })
+
+router.get(`/get/category_count` , async (req, res) => {
+    const categoryCount = await Category.countDocuments();
+    if(!categoryCount) {
+        return res.status(500).json({success: false, message:"category does not exist"})
+    }
+    res.send({ 
+        totalCategory: categoryCount 
+    });
+})
+
+
+
 
 module.exports  = router;

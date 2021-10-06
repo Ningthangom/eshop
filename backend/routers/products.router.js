@@ -6,24 +6,33 @@ const router = express.Router();
 // Product is imported as object because of the way it's exported: exports.Product
 const {Product} = require('../models/products')
 const {Category} = require('../models/category')
-
-const mongoose = 
+const mongoose = require('mongoose');
 
 
 require('dotenv/config');
 
 // express methods: get, post, put, delete
 
+
+
 // without using async this get method returns error
 // the data might not be ready yet
 //get all the products 
 router.get(`/` , async (req, res) => {
-    const productList = await Product.find().populate('category');
+    // how to put items in the same category
+    //localhost:3000/api/v1/products?categories= 121234,533232
+        let filter = {};
+        if(req.query.categories) {
+            filter ={category: req.query.categories.split(',')}
+            console.log('filter is run')
+        }
+    const productList = await Product.find(filter).populate('category');
     if(!productList){
         res.status(500).json({success: false})
     }
      res.send(productList);
 })
+
 
 //get a single product 
 router.get(`/:id` , async (req, res) => {
@@ -37,6 +46,7 @@ router.get(`/:id` , async (req, res) => {
 
 // create a new product
  router.post(`/` , async (req, res) => {
+
 // checking if the category exists
  const category = await Category.findById(req.body.category)
  if(!category) {
@@ -65,6 +75,10 @@ router.get(`/:id` , async (req, res) => {
 
 // update a product 
 router.put('/:id', async(req, res) =>{
+    // check if the id is a valid mongo id 
+   if(!mongoose.isValidObjectId(req.params.id)){
+    return res.status(400).json({success: false, message:"invalid product id"})
+}
     const category = await Category.findById(req.body.category)
     if(!category) {
         return res.status(404).json({success:false, message:"invalid category"})
@@ -111,7 +125,29 @@ router.delete('/:id', (req, res) => {
     })
 })
 
- 
+// get product count
+router.get(`/get/product_count` , async (req, res) => {
+    const productCount = await Product.countDocuments();
+    if(!productCount) {
+        return res.status(500).json({success: false, message:"product does not exist"})
+    }
+    res.send({ 
+        totalProduct: productCount
+    });
+})
 
 
-module.exports  = router;
+//featured
+router.get(`/get/featured/:count` , async (req, res) => {
+    // this count will limit how many featured product to be displayed
+    const count = req.params.count ? req.params.count:0
+    // as count is returning string value we need to make sure count is numeric 
+    // by adding + sign in front of count
+    const productFeatured = await Product.find({isFeatured: true}).limit(+count);
+    if(!productFeatured) {
+        return res.status(500).json({success: false, message:"featured product does not exist"})
+    }
+    res.send(productFeatured);
+})
+
+module.exports  = router;  

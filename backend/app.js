@@ -12,12 +12,19 @@ const mongoose = require('mongoose');
 
 const productsRouter = require('./routers/products.router')
 const categoriesRouter = require('./routers/category.router')
+const userRouter = require('./routers/users.route')
+const authJwt = require('./middleware/jwt')
+const errorHandler = require('./middleware/error-handler')
 
 // Middleware: replacement of bodyParser 
 app.use(express.json())
 
 // tiny is used for displaying a specific request 
 app.use(morgan('tiny'))
+ 
+app.use(authJwt());
+
+app.use(errorHandler);
 
 const api = process.env.API_URL;
 
@@ -31,6 +38,7 @@ app.options('*', cors());
 //Routes
 app.use(`${api}/products`, productsRouter);
 app.use(`${api}/categories`, categoriesRouter);
+app.use(`${api}/users`, userRouter);
 
 // this connect returns a promise which contain .then(success) and .catch(fail) methods
 mongoose.connect(process.env.MONGO_CONNECTION_STRING)
