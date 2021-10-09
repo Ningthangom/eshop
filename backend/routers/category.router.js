@@ -12,7 +12,10 @@ router.get('/', async (req, res) => {
 
     }
     res.status(200).send(categoryList)
-})
+})  
+
+
+
 
 // get a category with details
 router.get('/:id', async(req,res) => {

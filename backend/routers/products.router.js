@@ -26,7 +26,7 @@ router.get(`/` , async (req, res) => {
             filter ={category: req.query.categories.split(',')}
             console.log('filter is run')
         }
-    const productList = await Product.find(filter).populate('category');
+    const productList = await Product.find(filter).populate('category').sort({'dateCreated': -1});
     if(!productList){
         res.status(500).json({success: false})
     }
