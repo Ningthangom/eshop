@@ -12,6 +12,7 @@ function authJwt() {
             //${api}/products
             //regular expressions
             // /\/api\/v1\/products(.*)/
+            { url:/\/public\/upload(.*)/, methods: ['GET', 'OPTIONS'] },
             { url:/\/api\/v1\/products(.*)/, methods: ['GET', 'OPTIONS'] },
             { url:/\/api\/v1\/categories(.*)/, methods: ['GET', 'OPTIONS'] },
             `${api}/users/login`, 

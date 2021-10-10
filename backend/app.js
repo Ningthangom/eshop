@@ -27,6 +27,8 @@ app.use(authJwt());
 
 app.use(errorHandler);
 
+app.use('/public/upload', express.static(__dirname + '/public/upload'));
+
 const api = process.env.API_URL;
 
 // this cors will slove api connection with the front end 
