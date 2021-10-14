@@ -7,8 +7,10 @@ import { StyleSheet, View, LogBox } from 'react-native';
 import ProductContainer from './Screens/Products/ProductContainer.component'
 import Header from './Shared/Header'
 
-/* 
-LogBox.ignoreAllLogs(true); */
+
+// to hide logs 
+
+LogBox.ignoreAllLogs(true);
 
 export default function App() {
   return (

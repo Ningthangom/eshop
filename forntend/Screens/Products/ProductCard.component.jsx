@@ -32,11 +32,11 @@ const ProductCard = (props) => {
                 {name.length > 15 ? name.substring(0, 15 -3) + '...' : name}
             </Text>
             <Text style={styles.price}>
-                ${price}
+                ${price}/kg
             </Text>
             {countInStock > 0 ? (
                 <View style={{ marginBottom: 60}}>
-                        <Button title={'Add'} color ={'green'} /> 
+                        <Button title={'Add'} color ={'red'} /> 
                  </View>
             ) : <Text style={{ marginTop: 20}}>Currently Unavailable</Text>}
 
