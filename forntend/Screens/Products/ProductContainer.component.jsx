@@ -1,21 +1,21 @@
 
-import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, ActivityIndicator, FlatList, Dimensions  } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, ActivityIndicator, FlatList, Dimensions, ScrollView } from 'react-native';
 import ProductList from './ProductList.component'
-import { Container, Header, Icon, Item, Input, Text} from 'native-base';
+import { Container, Header, Icon, Item, Input, Text } from 'native-base';
 import SearchedProducts from './Search.component';
 import Banner from '../../Shared/Banner';
 import CategoryFilter from './categoryFilter.component'
 
 
 
-var {height} = Dimensions.get('window');
+var { height } = Dimensions.get('window');
 // import data 
 const data = require('../../assets/data/products.json');
 const productCate = require('../../assets/data/categories.json')
 
-const ProductContainer =() => {
-  
+const ProductContainer = () => {
+
     const [products, setProducts] = useState([]);
     const [productFilter, setProductFilter] = useState([]);
     const [focus, setFocus] = useState();
@@ -33,6 +33,7 @@ const ProductContainer =() => {
         setProductFilter(data);
         setFocus(false);
         setCategories(productCate);
+        setProductCategory(data);
         setActive(-1);
         setInitialState(data);
 
@@ -43,6 +44,7 @@ const ProductContainer =() => {
             setCategories([]);
             setActive();
             setInitialState([]);
+           
         }
     }, []);
 
@@ -63,98 +65,106 @@ const ProductContainer =() => {
     const onBlur = () => {
         setFocus(false)
     }
-  
+
     // categories related functions 
     const changeCategory = (cate) => {
         {
-            cate ==='all' ?
-            [setProductCategory(initialState), setActive(true)]
-            : 
-            [setProductCategory(
-                products.filter((i) => i.category.$oid === cate),
-                setActive(true)
-            )]
+            cate === 'all' ?
+                [setProductCategory(initialState), setActive(true)]
+                :
+                [setProductCategory(
+                    products.filter((i) => i.category.$oid === cate),
+                    setActive(true)
+                )]
         }
     }
 
     return (
-        <Container>
-            <Header searchBar rounded> 
-            <Item> 
-                <Icon name = "ios-search"/>
-                <Input
-                 placeholder = "Search"
-                 onFocus={openList}
-                 onChangeText = {(text) => SearchProduct(text)}/>
-                 
+        <Container style={{backgroundColor: '#000000', color: 'white'}}>
+            <Header searchBar rounded>
+                <Item>
+                    <Icon name="ios-search" />
+                    <Input
+                        placeholder="Search"
+                        onFocus={openList}
+                        onChangeText={(text) => SearchProduct(text)} />
 
-                 {focus == true ? (
-                     <Icon onPress={onBlur} name = 'ios-close'/>
-                 ): null }
-               
-            </Item>
+
+                    {focus == true ? (
+                        <Icon onPress={onBlur} name='ios-close' />
+                    ) : null}
+
+                </Item>
             </Header>
 
-            { focus == true ? (
-                   <SearchedProducts 
+            {focus == true ? (
+                <SearchedProducts
 
-                   productFilter= {productFilter}
+                    productFilter={productFilter}
 
-               />
+                />
             ) : (
-                <View>
-                    <View> 
-                        <Banner />
-                    </View>
-                        <CategoryFilter 
-                        categories={categories} 
-                        categoryFilter={changeCategory}
-                        productCategory = { productCategory}
-                       active={active}
-                       setActive={setActive}
-                        />
-                    <View style = {styles.listContainer}> 
-                        <FlatList
-                            numColumns = {2}
-                            
-                            data = {products}
-                            renderItem = {({item}) => 
-                            <ProductList 
-                                key={item.id}
-                                item = {item}
+                <ScrollView>
+                        <View>
+                            <Banner />
+                        </View>
+                        <View>
+                            <CategoryFilter
+                                categories={categories}
+                                categoryFilter={changeCategory}
+                                productCategory={productCategory}
+                                active={active}
+                                setActive={setActive}
+                            />
+                        </View>
+                        {productCategory.length > 0 ? (
+                         <View style={styles.listContainer}>
+                         {productCategory.map((item) => {
+                             return(
+                                 <ProductList
+                                     /* navigation={props.navigation} */
+                                     key={item._id.$oid}
+                                     item={item}
+                                 />
+                             )
+                         })}
+                     </View>
+                        ): (
+                            <View style={[styles.center, {height: "5%"}]}>
+                                <Text> No Product Found</Text>
+                            </View>
+                        )
+                        }
+                       
 
-                            />}
-                            keyExtractor= {item => item.name}
-                        /> 
-                
-                </View>
+                   
+                </ScrollView>
 
-            </View>
+            )}
 
-            )}           
-                
-        </Container> 
+        </Container>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-      flexWrap: "wrap",
-      backgroundColor: "gainsboro",
+        flexWrap: "wrap",
+        backgroundColor: "gainsboro",
     },
     listContainer: {
-      height: height,
-      flex: 1,
-      flexDirection: "row",
-      alignItems: "flex-start",
-      flexWrap: "wrap",
-      backgroundColor: "gainsboro",
+        height: height,
+        flex: 1,
+        flexDirection: "row",
+        alignItems: "flex-start",
+        flexWrap: "wrap",
+        backgroundColor: "#000000",
     },
     center: {
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center', 
+        
     }
-  });
+});
 
 
 

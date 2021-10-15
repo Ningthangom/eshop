@@ -32,7 +32,7 @@ const SearchedProducts = (props) => {
                         
                      </Left>
                      <Body>
-                         <Text> {item.name}</Text>
+                         <Text style={{color: "white"}}> {item.name}</Text>
                          <Text note>{item.description}</Text>
                      </Body>
                      </ListItem>
