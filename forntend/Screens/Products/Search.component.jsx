@@ -32,8 +32,8 @@ const SearchedProducts = (props) => {
                         
                      </Left>
                      <Body>
-                         <Text style={{color: "white"}}> {item.name}</Text>
-                         <Text note>{item.description}</Text>
+                         <Text > {item.name}</Text>
+                         <Text note style={{color: ''}}>{item.description}</Text>
                      </Body>
                      </ListItem>
                 ))

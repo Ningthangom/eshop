@@ -32,6 +32,7 @@ const ProductContainer = () => {
         setProducts(data);
         setProductFilter(data);
         setFocus(false);
+        //category
         setCategories(productCate);
         setProductCategory(data);
         setActive(-1);
@@ -80,7 +81,7 @@ const ProductContainer = () => {
     }
 
     return (
-        <Container style={{backgroundColor: '#000000', color: 'white'}}>
+        <Container style={{backgroundColor: '', color: ''}}>
             <Header searchBar rounded>
                 <Item>
                     <Icon name="ios-search" />
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "flex-start",
         flexWrap: "wrap",
-        backgroundColor: "#000000",
+        backgroundColor: "green",
     },
     center: {
         justifyContent: 'center',
