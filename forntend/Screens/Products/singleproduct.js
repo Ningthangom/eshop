@@ -3,6 +3,12 @@ import {Image, View, StyleSheet, Text, ScrollView, Button} from 'react-native';
 
 import {Left, Right, Container, H1} from 'native-base';
 
+
+// REDUX 
+import {connect} from 'react-redux';
+import * as actions from '../../redux/Actions/cartActions'
+
+
 const SingleProduct = (props) => {
     const [item, setItem ] = useState(props.route.params.item);
     const [availability, setAvailability] = useState('');
@@ -14,7 +20,7 @@ const SingleProduct = (props) => {
             <View>
                 <Image 
                 source={{ uri: item.image ? item.image 
-                    : 'https://lh3.googleusercontent.com/proxy/PHMeEUxncFvxo71Hbw80j6G8IEv8CHaKUPMbfIAU_XfRTkc-S72ohLqMtiU0Ch-yZG9flgxaK1VXh0W4aIzZawc1Z2Yi'
+                    : 'https://www.cdc.gov/foodsafety/images/comms/features/GettyImages-1247930626-500px.jpg'
                  }}
                  resizeMode="contain"
                  style={styles.image}
@@ -31,7 +37,11 @@ const SingleProduct = (props) => {
                  <Text style={styles.price}>${item.price}</Text>
             </Left>
             <Right>
-                <Button style={{marginLeft: 50}} title="Add" />
+                <Button style={{marginLeft: 50}} title="Add"
+                    onPress={() =>
+                        props.addItemToCard(item)
+                    }
+                />
             </Right>
 
         </View>
@@ -87,4 +97,12 @@ const styles = StyleSheet.create({
     }
 })
 
-export default SingleProduct;
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addItemToCard: (product) => {
+            dispatch(actions.addToCart({quantity: 1, product}))
+        }
+    }
+}
+export default connect(null, mapDispatchToProps)(SingleProduct);

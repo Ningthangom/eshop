@@ -4,6 +4,10 @@ import { LogBox, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native'
 
 
+// redux 
+import { Provider } from 'react-redux';
+import store from './redux/store'
+
 // Navigation
 import Main from './Navigators/Main.navigator'
 
@@ -19,13 +23,15 @@ LogBox.ignoreAllLogs(true);
 
 export default function App() {
   return (
-    <NavigationContainer> 
-       {/*  <Header/> */}
-       <View style= {{height: 40}}/>
-        <Main/>    
-        <StatusBar style="auto" />
+    <Provider store={store}>
+      <NavigationContainer> 
+        {/*   <Header/> */}
+        <View style= {{height: 40}}/>
+          <Main/>    
+          <StatusBar style="auto" />
 
-    </NavigationContainer>
+      </NavigationContainer>
+    </Provider>
    
   );
 }
