@@ -43,6 +43,7 @@ const CheckOut = (props) => {
             shippingAddress2: address2,
             zip
         }
+        // order will be passed to payment component
         props.navigation.navigate("Payment", {order: order})
     }
 
@@ -62,28 +63,28 @@ const CheckOut = (props) => {
                     name={"phone"}
                     value={phone}
                     keyboardType={"numeric"}
-                    onChangeText={() => setPhone(text)}
+                    onChangeText={(text) => setPhone(text)}
                 />
                 <Input
 
                     placeholder={"Shipping Address 1"}
                     name={"ShippingAddress1"}
                     value={address}
-                    onChangeText={() => setAddress(text)}
+                    onChangeText={(text) => setAddress(text)}
                 />
                 <Input
 
                     placeholder={"Shipping Address 2"}
                     name={"ShippingAddress2"}
                     value={address2}
-                    onChangeText={() => setAddress2(text)}
+                    onChangeText={(text) => setAddress2(text)}
                 />
                 <Input
 
                     placeholder={"City"}
                     name={"city"}
                     value={city}
-                    onChangeText={() => setCity(text)}
+                    onChangeText={(text) => setCity(text)}
 
                 />
                 <Input
@@ -91,18 +92,11 @@ const CheckOut = (props) => {
                     placeholder={"ZipCode"}
                     name={"zip"}
                     value={zip}
-                    onChangeText={() => setZip(text)}
-
-                />
-                <Input
-
-                    placeholder={"Country"}
-                    name={"country"}
-                    value={zip}
                     keyboardType={"numeric"}
-                    onChangeText={() => setZip(text)}
+                    onChangeText={(text) => setZip(text)}
 
                 />
+             
                 <Item picker >
                     <Picker
                         mode='dropdown'
