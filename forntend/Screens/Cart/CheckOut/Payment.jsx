@@ -1,17 +1,15 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 
-
-
-const CheckOut = () => {
+const Payment = () => {
 
 
     return (
         <View>
-            <Text>Checkout Page</Text>
+            <Text>Payment Page</Text>
         </View>
     )
 }
 
 
-export default CheckOut;
+export default Payment;

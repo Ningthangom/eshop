@@ -1,26 +1,25 @@
 import React from 'react'
-import { createStackNavigator } from "@react-navigation/stack"
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
+
+//screens
+import CheckOut from "../Screens/Cart/CheckOut/CheckOut"
+import Confirm from "../Screens/Cart/CheckOut/Confirm"
+import Payment from "../Screens/Cart/CheckOut/Payment"
 
 
-import CheckOut from "../Screens/Cart/CheckOut"
+const Tab = createMaterialTopTabNavigator()
 
-const Stack = createStackNavigator()
-
-function MyStack() {
+function MyTabs() {
     return (
-        <Stack.Navigator>
-            <Stack.Screen 
-                name='CheckOutPage'
-                component={CheckOut}
-                options={{
-                    headerShown: false,
-                }}
-            />
-        </Stack.Navigator>
+        <Tab.Navigator>
+            <Tab.Screen  name="Shipping" component={CheckOut} />
+            <Tab.Screen  name="Payment" component={Payment} />
+            <Tab.Screen  name="Confirm" component={Confirm} />  
+        </Tab.Navigator>
     )
 }
 
 export default function CheckOutNavigator() {
-    return <MyStack />;
+    return <MyTabs />;
 }
 

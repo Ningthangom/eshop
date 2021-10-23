@@ -78,7 +78,7 @@ const Cart =(props) => {
                         />
                     </Right>
                     <Right>
-                        <Button title="Checkout" 
+                        <Button title="Chekout" 
                         onPress={() => props.navigation.navigate('Checkout')} />
                     </Right>
 
