@@ -53,7 +53,16 @@ mongoose.connect(process.env.MONGO_CONNECTION_STRING)
         console.log(`Database connection failed ${err}`)
     })
 
-app.listen (3000,() => {
+    // development 
+/* app.listen (3000,() => {
     console.log("app is running on port 3000")
 } )
+ */
+
+// Production 
+
+var server = app.listen(process.env.PORT || 3000, function() {
+    var port = server.address().port;
+    console.log('express is working on port: ' + port);
+})
  

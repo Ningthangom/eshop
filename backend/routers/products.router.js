@@ -8,7 +8,7 @@ const {Product} = require('../models/products')
 const {Category} = require('../models/category')
 const mongoose = require('mongoose');
 const multer  = require('multer');
-const upload = multer()
+
 
 
 require('dotenv/config');
