@@ -1,11 +1,18 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback   } from 'react';
 import { View, StyleSheet, ActivityIndicator, FlatList, Dimensions, ScrollView } from 'react-native';
 import ProductList from './ProductList.component'
 import { Container, Header, Icon, Item, Input, Text } from 'native-base';
+import {useFocusEffect} from '@react-navigation/native'
 import SearchedProducts from './Search.component';
 import Banner from '../../Shared/Banner';
 import CategoryFilter from './categoryFilter.component'
+
+
+
+// import axios from axios to do http requests
+import axios from 'axios';
+import baseURL from '../../assets/common/baseUrl';
 
 
 
@@ -19,6 +26,7 @@ const ProductContainer = (props) => {
     const [products, setProducts] = useState([]);
     const [productFilter, setProductFilter] = useState([]);
     const [focus, setFocus] = useState();
+    const [loading, setLoading] = useState(true)
 
 
     // categories variables 
@@ -28,26 +36,55 @@ const ProductContainer = (props) => {
     const [productCategory, setProductCategory] = useState([]);
 
 
-    useEffect(() => {
-        setProducts(data);
-        setProductFilter(data);
-        setFocus(false);
-        //category
-        setCategories(productCate);
-        setProductCategory(data);
-        setActive(-1);
-        setInitialState(data);
+    useFocusEffect((
+        useCallback(
+            ()=> {
+                setFocus(false);
+       
+                setActive(-1);
+        
+        
+                // getting products
+                axios
+                    .get(`${baseURL}products`)
+                    .then((res) => {
+                        setProducts(res.data);
+                        setProductFilter(res.data);
+                        setProductCategory(res.data);
+                        setInitialState(res.data);
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+        
+                // categories call 
+                axios
+                .get(`${baseURL}categories`)
+                .then((res)=> {
+                    console.log(res.data)
+                    setCategories(res.data);
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        
+                return () => {
+                    setProducts([]);
+                    setProductFilter([]);
+                    setFocus();
+                    setCategories([]);
+                    setActive();
+                    setInitialState([]);
+        
+                }
+            },
+            []
+        )
+    )
+    ) 
 
-        return () => {
-            setProducts([]);
-            setProductFilter([]);
-            setFocus();
-            setCategories([]);
-            setActive();
-            setInitialState([]);
-           
-        }
-    }, []);
+     
+  
 
 
 
@@ -68,20 +105,35 @@ const ProductContainer = (props) => {
     }
 
     // categories related functions 
-    const changeCategory = (cate) => {
-        {
+  /*   const changeCategory = (cate) => { */
+       /*  console.log("this is cate id: ", cate)
+        console.log(products); */
+       /*  {
             cate === 'all' ?
                 [setProductCategory(initialState), setActive(true)]
                 :
                 [setProductCategory(
-                    products.filter((i) => i.category.$oid === cate),
+                    products.filter((i) => i.category._id === cate),
                     setActive(true)
                 )]
         }
-    }
+    } */
+
+    const changeCategory = (ctg) => {
+        {
+          ctg === "all"
+            ? [setProductCategory(initialState), setActive(true)]
+            : [
+                setProductCategory(
+                  products.filter((i) => i.category._id === ctg),
+                  setActive(true)
+                ),
+              ];
+        }
+      };
 
     return (
-        <Container style={{backgroundColor: '', color: ''}}>
+        <Container style={{ backgroundColor: '', color: '' }}>
             <Header searchBar rounded>
                 <Item>
                     <Icon name="ios-search" />
@@ -107,39 +159,39 @@ const ProductContainer = (props) => {
                 />
             ) : (
                 <ScrollView>
-                        <View>
-                            <Banner />
+                    <View>
+                        <Banner />
+                    </View>
+                    <View>
+                        <CategoryFilter
+                            categories={categories}
+                            categoryFilter={changeCategory}
+                            productCategory={productCategory}
+                            active={active}
+                            setActive={setActive}
+                        />
+                    </View>
+                    {productCategory.length > 0 ? (
+                        <View style={styles.listContainer}>
+                            {productCategory.map((item) => {
+                                return (
+                                    <ProductList
+                                        navigation={props.navigation}
+                                        key={item._id.$oid}
+                                        item={item}
+                                    />
+                                )
+                            })}
                         </View>
-                        <View>
-                            <CategoryFilter
-                                categories={categories}
-                                categoryFilter={changeCategory}
-                                productCategory={productCategory}
-                                active={active}
-                                setActive={setActive}
-                            />
+                    ) : (
+                        <View style={[styles.center, { height: "5%" }]}>
+                            <Text> No Product Found</Text>
                         </View>
-                        {productCategory.length > 0 ? (
-                         <View style={styles.listContainer}>
-                         {productCategory.map((item) => {
-                             return(
-                                 <ProductList
-                                     navigation={props.navigation}
-                                     key={item._id.$oid}
-                                     item={item}
-                                 />
-                             )
-                         })}
-                     </View>
-                        ): (
-                            <View style={[styles.center, {height: "5%"}]}>
-                                <Text> No Product Found</Text>
-                            </View>
-                        )
-                        }
-                       
+                    )
+                    }
 
-                   
+
+
                 </ScrollView>
 
             )}
@@ -154,7 +206,7 @@ const styles = StyleSheet.create({
         backgroundColor: "gainsboro",
     },
     listContainer: {
-        height: height,
+      /*   height: height, */
         flex: 1,
         flexDirection: "row",
         alignItems: "flex-start",
@@ -163,8 +215,8 @@ const styles = StyleSheet.create({
     },
     center: {
         justifyContent: 'center',
-        alignItems: 'center', 
-        
+        alignItems: 'center',
+
     }
 });
 

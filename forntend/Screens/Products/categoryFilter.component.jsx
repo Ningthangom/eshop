@@ -4,6 +4,7 @@ import {StyleSheet, TouchableOpacity, ScrollView, View } from 'react-native';
 import {ListItem, Badge, Text, } from 'native-base';
 
 const CategoryFilter = (props) => {
+  /*   console.log('this is props from catfilter: ', props) */
 
     return (
    /*  <View style={{height: 60}}>  */
@@ -28,10 +29,11 @@ const CategoryFilter = (props) => {
                     </Badge>
                 </TouchableOpacity>
                 {props.categories.map((item) => (
+                    
                     <TouchableOpacity
-                    key={item._id.$oid}
+                    key={item._id}
                     onPress={() => {
-                        props.categoryFilter(item._id.$oid), 
+                        props.categoryFilter(item._id), 
                         props.setActive(props.categories.indexOf(item))
                     }}
                 >
