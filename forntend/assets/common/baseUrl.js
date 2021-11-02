@@ -1,7 +1,8 @@
 
 import {Platform } from 'react-native';
 
-let baseURL = '';
+let baseURL = 'https://eshop-server-101.herokuapp.com/api/v1/';
+/* let baseURL = '';
 
 { 
     Platform.OS =='android'
@@ -10,7 +11,7 @@ let baseURL = '';
         : 
     baseURL = 'http://localhost:3000/api/v1'
 
-}
+} */
 
 
 export default baseURL;

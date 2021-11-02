@@ -7,7 +7,9 @@ import Swiper from 'react-native-swiper';
 
 var {width} = Dimensions.get('window');
 
-const Banner = () => {
+
+const Banner = (props) => {
+  console.log("this is props from Banner : ", props);
     const [bannerData, setBannerData] = useState([]);
 
     useEffect(() =>{
