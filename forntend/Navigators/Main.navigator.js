@@ -1,6 +1,6 @@
 
 
-import React from 'react';
+import React, {useContext} from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View } from 'react-native';
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -13,9 +13,16 @@ import UserNavigator from './UserNavigator'
 import AdminNavigator from './AdminNavigator'
 
 
+// authentication
+import AuthGloble from '../contextAPI/store/AuthGloble'
+
+
 const Tab = createBottomTabNavigator();
 
 const Main = () => {
+
+    const context = useContext(AuthGloble);
+
     return (
         <Tab.Navigator
             initialRouteName="HomePage"
@@ -50,17 +57,19 @@ const Main = () => {
                     headerShown: false,
                 }}
             />
-            <Tab.Screen
-                name="Admin"
-                component={AdminNavigator}
-                options={{
-                    tabBarIcon: ({ color }) => (
+            {context.stateUser.user.isAdmin == true ?
+            (  <Tab.Screen
+              name="Admin"
+              component={AdminNavigator}
+              options={{
+                  tabBarIcon: ({ color }) => (
 
-                        <Icon name="cog" color={color} size={30} />
-                    ),
-                    headerShown: false,
-                }}
-            />
+                      <Icon name="cog" color={color} size={30} />
+                  ),
+                  headerShown: false,
+              }}
+          />) : null }
+          
             <Tab.Screen
                 name="User"
                 component={UserNavigator}

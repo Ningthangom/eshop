@@ -7,7 +7,8 @@ import Error from '../../Shared/Error'
 
 // context api 
 import AuthGloble from "../../contextAPI/store/AuthGloble";
-import {loginUser} from "../../contextAPI/actions/Auth_action"
+import { loginUser } from "../../contextAPI/actions/Auth_action"
+import EasyButton from '../../Shared/StyledComponent/EasyButton'
 
 
 const Login = (props) => {
@@ -22,23 +23,23 @@ const Login = (props) => {
 
 
     useEffect(() => {
-        if(context.stateUser.isAuthenticated === true) { 
+        if (context.stateUser.isAuthenticated === true) {
             props.navigation.navigate("UserProfilePage")
-        } 
+        }
     }, [context.stateUser.isAuthenticated])
 
 
     const HandleSubmit = () => {
-       /*  console.log("handleSubmit is called"); */
+        /*  console.log("handleSubmit is called"); */
         const user = {
             email,
             password
         }
-        if(email === "" || password === "") {
+        if (email === "" || password === "") {
             /* console.log("checked password and email"); */
             setErr('Please fill in your credentials');
-        }else{
-           
+        } else {
+
             loginUser(user, context.dispatch);
             /* console.log("login success"); */
         }
@@ -63,19 +64,25 @@ const Login = (props) => {
                 onChangeText={(text) => setPassword(text)}
             />
             <View style={styles.buttonGroup}>
-                {err ? <Error message={err} /> : null }
-                <Button
-                 title="Login"
-                 disabled={disable}
-                 onPress = {() =>{ HandleSubmit()}}/>
+                {err ? <Error message={err} /> : null}
+                <EasyButton
+                    medium primary
+                    disabled={disable}
+                    onPress={() => { HandleSubmit() }}>
+                    <Text style={{ color: 'white' }}>Login</Text>
+                </EasyButton>
             </View>
-            <View style={{ marginTop: 40}, styles.buttonGroup}>
-            
-               
-               <Text style = {styles.middleText}> 
-               Don't have an account yet? 
-               </Text>
-               <Button title = "Register" onPress = {() => props.navigation.navigate("RegisterPage")}/>
+            <View style={{ marginTop: 40 }, styles.buttonGroup}>
+
+
+                <Text style={styles.middleText}>
+                    Don't have an account yet?
+                </Text>
+                <EasyButton
+                 medium secondary
+                 onPress={() => props.navigation.navigate("RegisterPage")} >
+                     <Text>Register</Text>
+                </EasyButton>
             </View>
         </FormContainer>
     )
@@ -86,10 +93,10 @@ const styles = StyleSheet.create({
     buttonGroup: {
         width: '80%',
         alignItems: 'center',
-    }, 
+    },
     middleText: {
-         marginTop: 20,
-         alignSelf: 'center'
+        marginTop: 20,
+        alignSelf: 'center'
     }
 
 })

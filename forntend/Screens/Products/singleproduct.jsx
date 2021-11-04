@@ -8,12 +8,31 @@ import Toast from 'react-native-toast-message'
 // REDUX 
 import {connect} from 'react-redux';
 import * as actions from '../../redux/Actions/cartActions'
-
+import EasyButton from '../../Shared/StyledComponent/EasyButton'
+import TraficLight from '../../Shared/StyledComponent/traficLight'
 
 const SingleProduct = (props) => {
     const [item, setItem ] = useState(props.route.params.item);
     const [availability, setAvailability] = useState('');
+    const [availabilityText, setAvailabilityText] = useState('')
 
+
+    useEffect(() => {
+            if(props.route.params.item.countInStock == 0) {
+                setAvailability(<TraficLight unavailable></TraficLight>)
+                setAvailabilityText('Unavailable')
+            }else if(props.route.params.item.countInStock <= 5) {
+                setAvailability(<TraficLight limited></TraficLight>)
+                setAvailabilityText('Limited Stock')
+            }else{
+                setAvailability(<TraficLight available></TraficLight>)
+                setAvailabilityText('available')
+            }
+            return () => {
+                setAvailability(null);
+                setAvailabilityText('');
+            }
+    },[])
 
     return (
       <Container style={styles.container}> 
@@ -29,7 +48,15 @@ const SingleProduct = (props) => {
             <View style={styles.contentContainer}>
                 <H1 style={styles.contentHeader}> {item.name}</H1>
                 <Text style= {styles.contentText}> brand: {item.brand}</Text>
-                {/* todo: description, price and availability */}
+                 <View style={styles.availabilityContainer}>
+                     <View style={styles.availability}>
+                         <Text style={{marginRight: 10}}>
+                             Availibility: {availabilityText}  {availability}          
+                         </Text> 
+                                        
+                     </View>
+                     <Text>{item.description}</Text>     
+                 </View>
             </View>
             </View>
         </ScrollView>
@@ -38,7 +65,10 @@ const SingleProduct = (props) => {
                  <Text style={styles.price}>${item.price}</Text>
             </Left>
             <Right>
-                <Button style={{marginLeft: 50}} title="Add"
+                <EasyButton
+                medium
+                 primary
+                 style={{marginLeft: 50}}
                     onPress={() =>
                        { props.addItemToCard(item),
                         Toast.show({
@@ -50,7 +80,9 @@ const SingleProduct = (props) => {
                     
                     }
                     }
-                />
+                >
+                    <Text style={{ color: 'white' }}> Add </Text>
+                    </EasyButton>
             </Right>
 
         </View>
@@ -84,7 +116,8 @@ const styles = StyleSheet.create({
     },
     contentHeader: {
         fontWeight: 'bold', 
-        marginBottom: 20
+        marginBottom: 20,
+        fontSize:25
         
     },
     contentText: {
@@ -103,6 +136,15 @@ const styles = StyleSheet.create({
         fontSize: 24,
         margin: 20,
         color:'red'
+    },
+    availabilityContainer: {
+        marginBottom:20,
+        alignItems: 'center',
+
+    }, 
+    availability:{
+        flexDirection: 'row',
+        marginBottom:10
     }
 })
 

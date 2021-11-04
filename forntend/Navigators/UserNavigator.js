@@ -28,7 +28,7 @@ function MyStack() {
                 name="UserProfilePage"
                 component={UserProfile}
                 options={{
-                    title: 'userProfile'
+                    headerShown: false,
                 }}
             />
         </Stack.Navigator>

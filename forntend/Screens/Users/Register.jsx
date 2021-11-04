@@ -11,6 +11,9 @@ import axios from 'axios';
 import baseURL from '../../assets/common/baseUrl';
 
 
+// button 
+import EasyButton from '../../Shared/StyledComponent/EasyButton'
+
 const Register = (props) => {
 
     const [name, setName] = useState('');
@@ -68,8 +71,7 @@ const Register = (props) => {
     return (
         <KeyboardAwareScrollView
             viewIsInsideTabBar={true}
-            
-            extraHeight={200}
+            extraHeight={50}
             enableOnAndroid={true}
 
         >
@@ -110,18 +112,24 @@ const Register = (props) => {
                 </View> */}
                 <View style={{ marginTop: 40 }, styles.buttonGroup}>
                 {err ? <Error message={err} style={{marginBottom: 10}} /> : null}
-                    <Button
-                     title="Register"
+                    <EasyButton
+                     medium primary
                      style={{marginTop: 30}}
                      disabled={disable}
                     onPress={() => {register(),
                                 setDisable(true)
                     }
                         
-                      } />
+                      } >
+                          <Text>Register</Text>
+                    </EasyButton>
                 </View>
-                <View style={{marginTop: 40}}>
-                    <Button title={'Back to Login'} onPress={() => props.navigation.navigate("LoginPage")} /> 
+                <View style={{marginTop: 5}}>
+                    <EasyButton large secondary
+                     onPress={() => props.navigation.navigate("LoginPage")}
+                      >
+                          <Text style={{ color: 'white' }}>Back to Login</Text>
+                    </EasyButton> 
                 </View>
             </FormContainer>
         </KeyboardAwareScrollView>

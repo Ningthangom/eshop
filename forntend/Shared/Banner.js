@@ -22,34 +22,6 @@ const Banner = (props) => {
             setBannerData([])
         }
     }, [])
-
-/*     return (
-        <ScrollView>  
-            <View style = {styles.container}>
-                <View style = {styles.swiper}>
-                    <Swiper 
-                        style={{ height: width / 2}}
-                        showButtons = {false}
-                        autoplay={true}
-                        autoplayTimeout = {2}
-                    >
-                        {bannerData.map((item) => {
-                            return (
-                                <Image 
-                                key={item}
-                                style ={styles.imageBanner}
-                                resizeMode="contain"
-                                source={{uri: item}}
-                             />
-                            );
-                        })}
-                    </Swiper>
-                    <View style={{height: 20}}> whatever  </View>
-                </View>
-            </View>  
-         </ScrollView>
-       
-    ) */
    return (
         <ScrollView>
           <View style={styles.container}>
