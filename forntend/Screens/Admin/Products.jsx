@@ -68,7 +68,7 @@ const Products = (props) => {
                 axios
                 .get(`${baseURL}products`)
                 .then((res) => {
-                    console.log("Do i have products here: ", res)
+                    /* console.log("Do i have products here: ", res) */
                     setProductList(res.data);
                     setProductFilter(res.data);
                     setLoading(false);

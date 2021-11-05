@@ -20,6 +20,8 @@ var { width, height } = Dimensions.get('window');
 
 const ListItem = (props) => {
 
+   /*  console.log("this is props from listItem: ", props); */
+
     const [modalVisible, setModalVisible] = useState(false)
 
 
@@ -54,7 +56,8 @@ const ListItem = (props) => {
                          medium
                         secondary 
                         onPress={() => [
-                            props.navigation.navigate("ProductFormPage"),
+                            
+                            props.navigation.navigate("ProductFormPage",{item: props}),
                             setModalVisible(false)
                         ]}
                         >

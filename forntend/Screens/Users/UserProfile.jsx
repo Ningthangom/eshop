@@ -17,7 +17,7 @@ const {height, width} = Dimensions.get('window')
 const UserProfile =(props) => {
 
     const context = useContext(AuthGloble);
-    console.log(`this is context from AuthGloble`,context);
+   /*  console.log(`this is context from AuthGloble`,context); */
     const [userProfile, setUserProfile] = useState();
     const [loading, setLoading] = useState(true)
 
