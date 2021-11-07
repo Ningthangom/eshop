@@ -24,6 +24,8 @@
 - view all the orders and update their order status('pending', 'shipped', delivered)
 
 ## Server is hosted on heroku
+![Alt Text](app.gif)
+
 
 ## npm packages used in front ends
  -"@expo/vector-icons": "^12.0.5",
@@ -75,4 +77,3 @@
     "multer": "^1.4.3",
     "nodemon": "^2.0.13"
 
-![Alt Text](app.gif)
