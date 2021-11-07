@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 20,
     alignContent: 'center',
-    fontFamily: 'cursive'
+   
   },
   image: {
     flex: 1,

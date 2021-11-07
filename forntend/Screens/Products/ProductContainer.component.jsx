@@ -62,7 +62,7 @@ const ProductContainer = (props) => {
                 axios
                 .get(`${baseURL}categories`)
                 .then((res)=> {
-                    console.log(res.data)
+                    /* console.log(res.data) */
                     setCategories(res.data);
                 })
                 .catch((err) => {
