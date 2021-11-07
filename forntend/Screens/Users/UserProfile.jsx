@@ -20,7 +20,7 @@ const {height, width} = Dimensions.get('window')
 const UserProfile =(props) => {
 
     const context = useContext(AuthGloble);
-    console.log(`this is context from AuthGloble`,context.stateUser.user);
+   /*  console.log(`this is context from AuthGloble`,context.stateUser.user); */
     const [userProfile, setUserProfile] = useState();
     const [loading, setLoading] = useState(true);
     const [orders, setOrders] = useState();
@@ -63,7 +63,7 @@ const UserProfile =(props) => {
         .get(`${baseURL}orders`)
         .then((x) => {
             const data = x.data;
-            console.log("this is orders from user profile: ", x.data)
+            /* console.log("this is orders from user profile: ", x.data) */
             const userOrders = data.filter(
                 (order) => order.user.id === context.stateUser.user.userId
             );
@@ -78,7 +78,7 @@ const UserProfile =(props) => {
 
     },[context.stateUser.isAuthenticated]))
     
-    console.log("this is orders from user profile", orders)
+    /* console.log("this is orders from user profile", orders) */
 
     return (
         <>

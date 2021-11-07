@@ -92,7 +92,7 @@ const Confirm = (props) => {
             {productUpdate && (
               <>
                 {productUpdate.map((x) => {
-                     /* console.log("this is productUpdate array: ", productUpdate) */
+                     console.log("this is productUpdate array: ", x)
                   return (
                     <ListItem style={styles.listItem} key={x.name} avatar>
                       <Left>
