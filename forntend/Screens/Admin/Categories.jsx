@@ -108,24 +108,6 @@ const Categories = () => {
  
     } 
 
-   /*  const deleteCategory = (id) => {
-        const config = {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }
-        };
-
-        axios
-        .delete(`${baseURL}categories/${id}`, config)
-        .then((res) => {
-            console.log("delete category was called ")
-            const newCategories = categories.filter((item) => item.id !== id);
-            console.log("category is deleted")
-            setCategories(newCategories);
-        })
-        .catch((error) => alert("Error to load categories"));
-    }
- */
 
     return (
         <View style={{ position: 'relative', height: '100%' }}>

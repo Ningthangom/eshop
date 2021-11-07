@@ -2,15 +2,16 @@
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import { Text, Left, Right, ListItem, Thumbnail, Body, View } from "native-base";
+import { FlatList } from "react-native-gesture-handler";
 
-const CartItem = (props) => {
+const ItemsInConfirm = (props) => {
    
- /*  console.log('this is props', props.item); */
-  const data = props.item.item;
+  console.log('this is props', props.item);
+  const data = props.item;
   /* console.log('this is data', data); */
   return (
     
-    <ListItem style={styles.listItem} key={Math.random()} avatar>
+    <ListItem style={styles.listItem} key={data.id} avatar>
       <Left>
         <Thumbnail
           source={{
@@ -39,7 +40,8 @@ const styles = StyleSheet.create({
     listItem: {
         alignItems: 'center',
         backgroundColor: 'white',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        width: "80%"
     },
     body: {
         margin: 10,
@@ -48,4 +50,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default CartItem;
+export default ItemsInConfirm;

@@ -13,6 +13,7 @@ import TraficLight from '../../Shared/StyledComponent/traficLight'
 
 const SingleProduct = (props) => {
     const [item, setItem ] = useState(props.route.params.item);
+
     const [availability, setAvailability] = useState('');
     const [availabilityText, setAvailabilityText] = useState('')
 
@@ -70,7 +71,8 @@ const SingleProduct = (props) => {
                  primary
                  style={{marginLeft: 50}}
                     onPress={() =>
-                       { props.addItemToCard(item),
+                       { /* props.addItemToCard(item) */
+                        props.addItemToCard(item.id),
                         Toast.show({
                             topOffset: 60,
                             type: "success",

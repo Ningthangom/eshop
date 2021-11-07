@@ -19,7 +19,7 @@ const ProductList = (props) => {
             > 
 
             <View style={{width: width/2, backgroundColor: 'green', color: ''}}> 
-                <ProductCard key={item.name}{...item}/>
+                <ProductCard key={item.id}{...item}/>
             </View>
 
 

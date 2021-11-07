@@ -11,7 +11,7 @@ function MyStack() {
     return (
         <Stack.Navigator>
             <Stack.Screen 
-                name='LoginPage'
+                name ="LoginPage"
                 component={Login}
                 options={{
                     headerShown: false,

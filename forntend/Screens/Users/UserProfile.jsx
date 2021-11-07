@@ -10,6 +10,9 @@ import baseURL from "../../assets/common/baseUrl";
 
 import AuthGloble from "../../contextAPI/store/AuthGloble";
 import {logoutUser} from "../../contextAPI/actions/Auth_action";
+import EasyButton from '../../Shared/StyledComponent/EasyButton'
+
+import OrderCard from '../../Shared/OrderCard'
 
 
 const {height, width} = Dimensions.get('window')
@@ -17,11 +20,16 @@ const {height, width} = Dimensions.get('window')
 const UserProfile =(props) => {
 
     const context = useContext(AuthGloble);
-   /*  console.log(`this is context from AuthGloble`,context); */
+    console.log(`this is context from AuthGloble`,context.stateUser.user);
     const [userProfile, setUserProfile] = useState();
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true);
+    const [orders, setOrders] = useState();
 
-    useEffect(() => {
+
+    console.log("this is orders from user profile", orders)
+
+    useFocusEffect(
+        useCallback(() => {
         if(
             context.stateUser.isAuthenticated === false || 
             context.stateUser.isAuthenticated === null
@@ -51,17 +59,33 @@ const UserProfile =(props) => {
             console.log(`error in getting user detail: ${err}`)
         })
 
+        axios
+        .get(`${baseURL}orders`)
+        .then((x) => {
+            const data = x.data;
+            console.log("this is orders from user profile: ", x.data)
+            const userOrders = data.filter(
+                (order) => order.user.id === context.stateUser.user.userId
+            );
+            setOrders(userOrders)
+        })
+        .catch((err) => console.log(err))
+
         return () => {
             setUserProfile();
+            setOrders();
         }
 
-    },[context.stateUser.isAuthenticated])
+    },[context.stateUser.isAuthenticated]))
+    
+    console.log("this is orders from user profile", orders)
 
     return (
         <>
         {loading == false ? ( 
-             <Container style={styles.container}>
+        <Container >
              <ScrollView contentContainerStyle={styles.subcontainer}>
+                 <View style={styles.container}>
                  <Text style={{ fontSize: 30, }}>
                       {userProfile ? userProfile.name : "name could not be found"}
                       </Text>
@@ -70,12 +94,31 @@ const UserProfile =(props) => {
                           <Text>Phone: { userProfile ? userProfile.phone : "user Phone could not be found" }</Text>
                       </View>
                       <View style ={{ marginTop: 80}}>
-                          <Button 
-                          title = {"Log out"} 
+                          <EasyButton 
+                            medium
+                            secondary
                           onPress={() => [
                               AsyncStorage.removeItem('jwt'), 
                               logoutUser(context.dispatch)
-                          ]}/>
+                          ]}>
+                              <Text>Logout</Text>
+                              </EasyButton>
+                      </View>
+                      </View>
+                      <View style={styles.order}>
+                          <Text style={{ fontSize:20, marginLeft: 20}}>My Orders</Text>
+                          <View >
+                              {orders ? (
+                                  orders.map((x) => {
+                                      return <OrderCard key={x.id} {...x}/>;   
+                                  })
+                              ): (
+                                  <View style={styles.order}>
+                                      <Text>You have no order</Text>
+                                  </View>
+                              )}
+                          </View>
+
                       </View>
              </ScrollView>
          </Container>
@@ -97,9 +140,10 @@ const styles = StyleSheet.create({
         flex: 1, 
         alignItems: 'center',
         
+        
 
     },
-    subcontainer:{
+   /*  subcontainer:{
         alignItems: 'center',
         marginTop: 30
     },
@@ -107,7 +151,13 @@ const styles = StyleSheet.create({
         height: height/2,
         alignItems: 'center',
         justifyContent: 'center'
-    }
+    },
+    order: {
+        marginTop: 20,
+        alignItems: "center",
+        marginBottom: 60,
+        width: '80%',
+    } */
 })
 
 export default UserProfile;

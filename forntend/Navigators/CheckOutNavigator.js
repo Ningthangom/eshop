@@ -4,6 +4,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 //screens
 import CheckOut from "../Screens/Cart/CheckOut/CheckOut"
 import Confirm from "../Screens/Cart/CheckOut/Confirm"
+import NewConfirm from '../Screens/Cart/CheckOut/NewConfirmPage'
 import Payment from "../Screens/Cart/CheckOut/Payment"
 
 

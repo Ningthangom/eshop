@@ -5,7 +5,7 @@ import { Badge, Text } from 'native-base';
 import { connect } from 'react-redux';
 
 const CartIcon = (props) => {
-    console.log("cartIcon is called ");
+   /*  console.log("cartIcon is called "); */
     return (
         <>
             {props.productCountInCart.length ? (

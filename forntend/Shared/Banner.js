@@ -9,7 +9,7 @@ var {width} = Dimensions.get('window');
 
 
 const Banner = (props) => {
-  console.log("this is props from Banner : ", props);
+  /* console.log("this is props from Banner : ", props); */
     const [bannerData, setBannerData] = useState([]);
 
     useEffect(() =>{
