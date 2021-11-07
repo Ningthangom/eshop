@@ -23,4 +23,4 @@
 - add and deleting a category
 - view all the orders and update their order status('pending', 'shipped', delivered)
 
-![Alt Text]('./frontend/assets/logo/app.gif')
+![Alt Text](app.gif)
